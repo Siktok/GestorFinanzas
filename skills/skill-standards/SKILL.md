@@ -7,7 +7,7 @@ description: Estandar local para crear, migrar, revisar y mantener skills de Fin
 
 ## Cuando usarla
 
-Usar esta skill antes de crear, migrar o modificar cualquier skill del proyecto.
+Usar esta skill antes de crear, migrar, modificar o revisar cualquier skill del proyecto.
 
 ## Reglas
 
@@ -21,6 +21,7 @@ Usar esta skill antes de crear, migrar o modificar cualquier skill del proyecto.
 - No usar `SKILL.md` como etiqueta visible cuando se referencie una skill; usar `nombre-de-la-skill` (`ruta/SKILL.md`).
 - Mantener `SKILL.md` breve, accionable y centrado en informacion que otro agente no pueda inferir facilmente.
 - Evitar duplicar reglas generales de `AGENTS.md`; enlazar o mencionar la skill relacionada cuando haga falta.
+- Mantener las skills alineadas con `README.md`, `docs/` y el estado real de `FinanzaNova.Web`.
 - Usar recursos opcionales solo cuando aporten valor real: `scripts/`, `references/` o `assets/`.
 
 ## Estructura recomendada
@@ -60,3 +61,4 @@ description: Que hace la skill y cuando debe usarse.
 - Confirmar que `name` coincide con `<name>`.
 - Confirmar que `description` no esta vacia y explica uso y contexto.
 - Confirmar que los enlaces relativos a otras skills o recursos funcionan desde la carpeta de la skill.
+- Confirmar que la skill no describe como futuro algo que ya existe en la aplicacion.

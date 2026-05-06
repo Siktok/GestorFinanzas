@@ -14,7 +14,8 @@ Usar esta skill antes de entregar cambios de codigo o cuando el usuario pida rev
 - Priorizar bugs, regresiones, riesgos y validaciones faltantes.
 - Verificar que el proyecto sigue en .NET 10 y ASP.NET Core MVC.
 - Confirmar que no se han introducido autenticacion, servicios externos, SPA, arquitectura compleja o persistencia fuera del alcance pedido.
-- Confirmar que SQLite con EF Core solo se usa cuando la tarea requiere persistencia.
+- Confirmar que SQLite con EF Core sigue siendo la persistencia local de la V1 y que no se ha introducido otra base de datos sin peticion explicita.
+- Confirmar que los calculos financieros respetan `docs/calculations.md` y `FinanzasResumenService` cuando aplique.
 - Confirmar que las skills del proyecto mantienen el formato `skills/<name>/SKILL.md` y que las referencias visibles usan el nombre de skill, no solo `SKILL.md`.
 - No revertir cambios ajenos.
 - No incluir `.vs/`, `bin/`, `obj/` ni archivos de base de datos generados sin peticion explicita.
@@ -34,6 +35,7 @@ Ejecutar:
 ```powershell
 dotnet restore FinanzaNova.slnx
 dotnet build FinanzaNova.slnx
+dotnet test FinanzaNova.slnx --no-build
 ```
 
 Si alguna validacion no se puede ejecutar, explicar el motivo y el riesgo residual.

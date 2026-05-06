@@ -5,6 +5,7 @@
 FinanzaNova es una aplicacion ASP.NET Core MVC en .NET 10 para una futura plataforma de gestion financiera.
 
 La solucion principal es `FinanzaNova.slnx` y la aplicacion web vive en `FinanzaNova.Web`.
+Los tests automatizados viven en `FinanzaNova.Tests`.
 
 ## Reglas base
 
@@ -56,6 +57,7 @@ Antes de entregar cambios de codigo, ejecutar:
 ```powershell
 dotnet restore FinanzaNova.slnx
 dotnet build FinanzaNova.slnx
+dotnet test FinanzaNova.slnx --no-build
 ```
 
 Si no se puede ejecutar alguna validacion, indicarlo claramente en la entrega.

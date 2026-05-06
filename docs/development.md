@@ -53,9 +53,19 @@ Antes de cerrar cambios de codigo:
 ```powershell
 dotnet restore FinanzaNova.slnx
 dotnet build FinanzaNova.slnx
+dotnet test FinanzaNova.slnx --no-build
 ```
 
 Si la app esta arrancada y bloquea `FinanzaNova.Web.exe`, para el proceso antes de compilar.
+
+## Tests
+
+`FinanzaNova.Tests` contiene la base de tests automatizados del proyecto:
+
+- Tests de `FinanzasResumenService` con SQLite en memoria para reglas de saldo, transferencias e inversiones.
+- Tests de integracion MVC con `WebApplicationFactory` para comprobar que las rutas principales cargan.
+
+Usa `dotnet test FinanzaNova.slnx --no-build` despues de compilar la solucion.
 
 ## Git
 

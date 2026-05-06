@@ -16,7 +16,8 @@ Usar esta skill al modificar vistas Razor, layout, navegacion, CSS, Bootstrap o 
 - Mantener una interfaz sobria, clara y adecuada para gestion financiera.
 - Priorizar legibilidad, responsive basico y navegacion predecible.
 - No introducir frameworks frontend, bundlers ni librerias visuales nuevas sin peticion explicita.
-- Evitar landing pages complejas o marketing visual pesado mientras no haya especificacion funcional clara.
+- Mantener pantallas operativas de dashboard, CRUD y tablas antes que landing pages o marketing visual pesado.
+- Usar `CultureInfo.GetCultureInfo("es-ES")` o la cultura ya configurada para importes y fechas en vistas.
 - Consultar `finance-conventions` (`../finance-conventions/SKILL.md`) para formato de fechas, importes, porcentajes, estados, colores y lenguaje financiero.
 
 ## Flujo recomendado
@@ -25,7 +26,7 @@ Usar esta skill al modificar vistas Razor, layout, navegacion, CSS, Bootstrap o 
 2. Reutilizar clases Bootstrap antes de crear CSS nuevo.
 3. Mantener componentes visuales simples: contenedores, tablas, formularios, alertas y botones claros.
 4. Usar textos visibles en espanol y orientados al uso financiero.
-5. Comprobar que el contenido no depende de datos persistidos si la tarea no pidio persistencia.
+5. Comprobar que las vistas reflejan correctamente cuentas, movimientos, categorias e inversiones cuando usen datos persistidos.
 6. Evitar cambios globales de layout si la tarea solo afecta a una vista.
 
 ## Validacion
