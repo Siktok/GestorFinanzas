@@ -72,10 +72,19 @@ dotnet run --project FinanzaNova.Web
 
 Despues de arrancar la aplicacion, abre la URL local indicada por `dotnet run`.
 
+## Tests
+
+La solucion incluye `FinanzaNova.Tests` con tests de xUnit para reglas financieras e integracion MVC basica.
+
+```powershell
+dotnet test FinanzaNova.slnx --no-build
+```
+
 ## Estructura principal
 
 - `FinanzaNova.slnx`: solucion del proyecto.
 - `FinanzaNova.Web`: aplicacion ASP.NET Core MVC.
+- `FinanzaNova.Tests`: tests automatizados con xUnit.
 - `FinanzaNova.Web/Data`: `DbContext` y migraciones de EF Core.
 - `FinanzaNova.Web/Models`: entidades financieras y ViewModels.
 - `FinanzaNova.Web/Controllers`: controladores MVC.

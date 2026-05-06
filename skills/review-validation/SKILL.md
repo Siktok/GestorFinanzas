@@ -35,6 +35,7 @@ Ejecutar:
 ```powershell
 dotnet restore FinanzaNova.slnx
 dotnet build FinanzaNova.slnx
+dotnet test FinanzaNova.slnx --no-build
 ```
 
 Si alguna validacion no se puede ejecutar, explicar el motivo y el riesgo residual.
