@@ -19,6 +19,8 @@ html {
 
 body {
   margin-bottom: 60px;
+  background: #f6f7f9;
+  color: #1f2933;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -28,4 +30,126 @@ body {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+
+.navbar {
+  background: #fff;
+}
+
+.panel,
+.metric {
+  background: #fff;
+  border: 1px solid #dde3ea;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.panel {
+  padding: 1.25rem;
+}
+
+.metric {
+  min-height: 116px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.metric span {
+  color: #667085;
+  font-size: 0.9rem;
+}
+
+.metric strong {
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  line-height: 1.2;
+}
+
+.form-panel {
+  max-width: 760px;
+}
+
+.filter-panel {
+  padding: 1rem;
+}
+
+.table-actions {
+  white-space: nowrap;
+}
+
+.table-actions form {
+  display: inline-block;
+}
+
+.color-swatch {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 4px;
+  border: 1px solid #cbd5e1;
+  vertical-align: middle;
+}
+
+.bar-chart {
+  min-height: 260px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+.bar-item {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: 180px auto auto;
+  gap: 0.4rem;
+  text-align: center;
+}
+
+.bar-track {
+  height: 180px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  background: #eef2f6;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar {
+  width: 55%;
+  min-height: 6px;
+}
+
+.bar-positive {
+  background: #198754;
+}
+
+.bar-negative {
+  background: #dc3545;
+}
+
+.bar-item span,
+.bar-item small {
+  overflow-wrap: anywhere;
+}
+
+.stack-list {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (max-width: 575.98px) {
+  .panel {
+    padding: 1rem;
+  }
+
+  .table-actions {
+    white-space: normal;
+  }
+
+  .bar-chart {
+    gap: 0.5rem;
+  }
 }
