@@ -50,6 +50,14 @@ La aplicacion usa SQLite con la cadena:
 
 Al arrancar la app se aplican las migraciones pendientes automaticamente. La base generada (`finanzanova.db`, `finanzanova.db-shm`, `finanzanova.db-wal`) no se versiona.
 
+## Documentacion
+
+- [Arquitectura](docs/architecture.md)
+- [Modelo de datos](docs/data-model.md)
+- [Calculos financieros](docs/calculations.md)
+- [Desarrollo local](docs/development.md)
+- [Decision tecnica: SQLite local sin login](docs/decisions/0001-local-sqlite-no-login.md)
+
 ## Requisitos
 
 - .NET SDK 10
