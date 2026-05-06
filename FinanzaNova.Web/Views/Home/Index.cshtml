@@ -1,8 +1,165 @@
-﻿@{
+@model DashboardViewModel
+@{
     ViewData["Title"] = "FinanzaNova";
+    var culture = CultureInfo.GetCultureInfo("es-ES");
+    var maxEvolucion = Model.EvolucionMensual.Count == 0 ? 0 : Model.EvolucionMensual.Max(x => Math.Abs(x.Valor));
+    var maxCategorias = Model.GastosPorCategoria.Count == 0 ? 0 : Model.GastosPorCategoria.Max(x => x.Valor);
 }
 
-<div class="text-center">
-    <h1 class="display-4">FinanzaNova</h1>
-    <p>Tu panel financiero estará disponible próximamente.</p>
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <h1 class="h2 mb-1">Dashboard financiero</h1>
+        <p class="text-muted mb-0">Resumen local de cuentas, movimientos e inversiones.</p>
+    </div>
+    <a class="btn btn-primary" asp-controller="Movimientos" asp-action="Create">Nuevo movimiento</a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-12 col-md-6 col-xl-3">
+        <div class="metric">
+            <span>Patrimonio total</span>
+            <strong>@Model.PatrimonioTotal.ToString("C", culture)</strong>
+        </div>
+    </div>
+    <div class="col-12 col-md-6 col-xl-3">
+        <div class="metric">
+            <span>Liquidez</span>
+            <strong>@Model.LiquidezTotal.ToString("C", culture)</strong>
+        </div>
+    </div>
+    <div class="col-12 col-md-6 col-xl-3">
+        <div class="metric">
+            <span>Inversiones</span>
+            <strong>@Model.InversionesTotal.ToString("C", culture)</strong>
+        </div>
+    </div>
+    <div class="col-12 col-md-6 col-xl-3">
+        <div class="metric">
+            <span>Balance del mes</span>
+            <strong>@((Model.IngresosMes - Model.GastosMes).ToString("C", culture))</strong>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <section class="col-12 col-xl-8">
+        <div class="panel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h5 mb-0">Evolucion mensual</h2>
+                <span class="text-muted small">Ingresos - gastos</span>
+            </div>
+            @if (Model.EvolucionMensual.Count == 0)
+            {
+                <p class="text-muted mb-0">Aun no hay movimientos confirmados.</p>
+            }
+            else
+            {
+                <div class="bar-chart">
+                    @foreach (var item in Model.EvolucionMensual)
+                    {
+                        var height = maxEvolucion == 0 ? 2 : Math.Max(8, (int)(Math.Abs(item.Valor) / maxEvolucion * 100));
+                        var barClass = item.Valor >= 0 ? "bar-positive" : "bar-negative";
+                        <div class="bar-item">
+                            <div class="bar-track">
+                                <div class="bar @barClass" style="height:@height%"></div>
+                            </div>
+                            <span>@item.Etiqueta</span>
+                            <small>@item.Valor.ToString("C", culture)</small>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </section>
+
+    <section class="col-12 col-xl-4">
+        <div class="panel">
+            <h2 class="h5 mb-3">Gastos por categoria</h2>
+            @if (Model.GastosPorCategoria.Count == 0)
+            {
+                <p class="text-muted mb-0">No hay gastos este mes.</p>
+            }
+            else
+            {
+                <div class="stack-list">
+                    @foreach (var item in Model.GastosPorCategoria)
+                    {
+                        var width = maxCategorias == 0 ? 0 : (int)(item.Valor / maxCategorias * 100);
+                        <div>
+                            <div class="d-flex justify-content-between small mb-1">
+                                <span>@item.Etiqueta</span>
+                                <strong>@item.Valor.ToString("C", culture)</strong>
+                            </div>
+                            <div class="progress" role="progressbar" aria-label="@item.Etiqueta" aria-valuenow="@width" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar bg-danger" style="width:@width%"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </section>
+
+    <section class="col-12 col-xl-6">
+        <div class="panel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h5 mb-0">Cuentas</h2>
+                <a asp-controller="Cuentas" asp-action="Index">Ver todas</a>
+            </div>
+            @if (Model.Cuentas.Count == 0)
+            {
+                <p class="text-muted mb-0">Crea tu primera cuenta para empezar.</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead><tr><th>Cuenta</th><th>Tipo</th><th class="text-end">Saldo</th></tr></thead>
+                        <tbody>
+                        @foreach (var cuenta in Model.Cuentas)
+                        {
+                            <tr>
+                                <td>@cuenta.Nombre</td>
+                                <td>@cuenta.Tipo</td>
+                                <td class="text-end fw-semibold">@cuenta.Saldo.ToString("C", culture)</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </section>
+
+    <section class="col-12 col-xl-6">
+        <div class="panel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h5 mb-0">Ultimos movimientos</h2>
+                <a asp-controller="Movimientos" asp-action="Index">Ver todos</a>
+            </div>
+            @if (Model.UltimosMovimientos.Count == 0)
+            {
+                <p class="text-muted mb-0">Aun no hay movimientos.</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead><tr><th>Fecha</th><th>Descripcion</th><th>Tipo</th><th class="text-end">Importe</th></tr></thead>
+                        <tbody>
+                        @foreach (var movimiento in Model.UltimosMovimientos)
+                        {
+                            <tr>
+                                <td>@movimiento.Fecha.ToString("dd/MM/yyyy")</td>
+                                <td>@movimiento.Descripcion</td>
+                                <td><span class="badge text-bg-secondary">@movimiento.Tipo</span></td>
+                                <td class="text-end">@movimiento.Importe.ToString("C", culture)</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </section>
 </div>

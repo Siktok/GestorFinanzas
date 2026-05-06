@@ -1,0 +1,70 @@
+@model MovimientosIndexViewModel
+@{
+    ViewData["Title"] = "Movimientos";
+    var culture = CultureInfo.GetCultureInfo("es-ES");
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h2 mb-0">Movimientos</h1>
+    <a class="btn btn-primary" asp-action="Create">Nuevo movimiento</a>
+</div>
+
+<form class="panel filter-panel mb-4" method="get">
+    <div class="row g-3 align-items-end">
+        <div class="col-md-5">
+            <label asp-for="CuentaId" class="form-label">Cuenta</label>
+            <select asp-for="CuentaId" asp-items="Model.Cuentas" class="form-select">
+                <option value="">Todas</option>
+            </select>
+        </div>
+        <div class="col-md-5">
+            <label asp-for="Tipo" class="form-label">Tipo</label>
+            <select asp-for="Tipo" asp-items="Model.Tipos" class="form-select">
+                <option value="">Todos</option>
+            </select>
+        </div>
+        <div class="col-md-2 d-grid">
+            <button class="btn btn-outline-primary" type="submit">Filtrar</button>
+        </div>
+    </div>
+</form>
+
+<div class="panel">
+    @if (Model.Movimientos.Count == 0)
+    {
+        <p class="text-muted mb-0">No hay movimientos registrados.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr><th>Fecha</th><th>Descripcion</th><th>Cuenta</th><th>Categoria</th><th>Tipo</th><th>Estado</th><th class="text-end">Importe</th><th></th></tr>
+                </thead>
+                <tbody>
+                @foreach (var movimiento in Model.Movimientos)
+                {
+                    var cuentaTexto = movimiento.Tipo == nameof(MovimientoTipo.Transferencia)
+                        ? $"{movimiento.Cuenta} -> {movimiento.CuentaDestino}"
+                        : movimiento.Cuenta;
+                    <tr>
+                        <td>@movimiento.Fecha.ToString("dd/MM/yyyy")</td>
+                        <td class="fw-semibold">@movimiento.Descripcion</td>
+                        <td>@cuentaTexto</td>
+                        <td>@(movimiento.Categoria ?? "-")</td>
+                        <td><span class="badge text-bg-secondary">@movimiento.Tipo</span></td>
+                        <td>@movimiento.Estado</td>
+                        <td class="text-end">@movimiento.Importe.ToString("C", culture)</td>
+                        <td class="text-end table-actions">
+                            <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@movimiento.Id">Editar</a>
+                            <form asp-action="Delete" asp-route-id="@movimiento.Id" method="post">
+                                <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

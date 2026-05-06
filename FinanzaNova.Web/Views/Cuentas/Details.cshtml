@@ -1,0 +1,93 @@
+@model Cuenta
+@{
+    ViewData["Title"] = Model.Nombre;
+    var culture = CultureInfo.GetCultureInfo("es-ES");
+    var saldo = (decimal)ViewBag.SaldoActual;
+    var capitalInvertido = (decimal)ViewBag.CapitalInvertido;
+    var movimientos = (List<Movimiento>)ViewBag.Movimientos;
+    var inversiones = (List<Inversion>)ViewBag.Inversiones;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h2 mb-1">@Model.Nombre</h1>
+        <p class="text-muted mb-0">@Model.Tipo - @(Model.Activa ? "Activa" : "Archivada")</p>
+    </div>
+    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-12 col-md-4">
+        <div class="metric">
+            <span>Saldo actual</span>
+            <strong>@saldo.ToString("C", culture)</strong>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="metric">
+            <span>Saldo inicial</span>
+            <strong>@Model.SaldoInicial.ToString("C", culture)</strong>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="metric">
+            <span>Capital invertido</span>
+            <strong>@capitalInvertido.ToString("C", culture)</strong>
+        </div>
+    </div>
+</div>
+
+<div class="panel mb-4">
+    <h2 class="h5 mb-3">Inversiones financiadas</h2>
+    @if (inversiones.Count == 0)
+    {
+        <p class="text-muted mb-0">No hay inversiones activas financiadas desde esta cuenta.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead><tr><th>Nombre</th><th>Tipo</th><th class="text-end">Invertido</th><th class="text-end">Valor actual</th></tr></thead>
+                <tbody>
+                @foreach (var inversion in inversiones)
+                {
+                    <tr>
+                        <td>@inversion.Nombre</td>
+                        <td>@inversion.Tipo</td>
+                        <td class="text-end">@inversion.ImporteInvertido.ToString("C", culture)</td>
+                        <td class="text-end">@inversion.ValorActual.ToString("C", culture)</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<div class="panel">
+    <h2 class="h5 mb-3">Ultimos movimientos</h2>
+    @if (movimientos.Count == 0)
+    {
+        <p class="text-muted mb-0">No hay movimientos para esta cuenta.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead><tr><th>Fecha</th><th>Descripcion</th><th>Tipo</th><th>Estado</th><th class="text-end">Importe</th></tr></thead>
+                <tbody>
+                @foreach (var movimiento in movimientos)
+                {
+                    <tr>
+                        <td>@movimiento.Fecha.ToString("dd/MM/yyyy")</td>
+                        <td>@movimiento.Descripcion</td>
+                        <td>@movimiento.Tipo</td>
+                        <td>@movimiento.Estado</td>
+                        <td class="text-end">@movimiento.Importe.ToString("C", culture)</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

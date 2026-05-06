@@ -1,0 +1,61 @@
+@model Inversion
+@{
+    ViewData["Title"] = "Nueva inversion";
+}
+
+<h1 class="h2 mb-4">Nueva inversion</h1>
+
+<div class="panel form-panel">
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <div class="mb-3">
+            <label asp-for="Nombre" class="form-label"></label>
+            <input asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Tipo" class="form-label"></label>
+            <select asp-for="Tipo" asp-items="Html.GetEnumSelectList<InversionTipo>()" class="form-select"></select>
+        </div>
+        <div class="mb-3">
+            <label asp-for="CuentaReferenciaId" class="form-label"></label>
+            <select asp-for="CuentaReferenciaId" asp-items="ViewBag.CuentaReferenciaId" class="form-select">
+                <option value="">Selecciona cuenta de financiacion</option>
+            </select>
+            <span asp-validation-for="CuentaReferenciaId" class="text-danger"></span>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="ImporteInvertido" class="form-label"></label>
+                <input asp-for="ImporteInvertido" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="ImporteInvertido" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="ValorActual" class="form-label"></label>
+                <input asp-for="ValorActual" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="ValorActual" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label asp-for="FechaValoracion" class="form-label"></label>
+            <input asp-for="FechaValoracion" class="form-control" type="date" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Notas" class="form-label"></label>
+            <textarea asp-for="Notas" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Notas" class="text-danger"></span>
+        </div>
+        <div class="form-check mb-4">
+            <input asp-for="Activa" class="form-check-input" />
+            <label asp-for="Activa" class="form-check-label"></label>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary" type="submit">Guardar</button>
+            <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
